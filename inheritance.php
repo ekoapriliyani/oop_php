@@ -7,10 +7,9 @@ class Produk {
            $penerbit,
            $harga,
            $jmlHalaman,
-           $waktuMain,
-           $tipe;
+           $waktuMain;
 
-    public function __construct($judul = "Judul", $penulis = "Penulis", $penerbit = "Penerbit", $harga = 0, $jmlHalaman = 0, $waktuMain = 0, $tipe = "Tipe")
+    public function __construct($judul = "Judul", $penulis = "Penulis", $penerbit = "Penerbit", $harga = 0, $jmlHalaman = 0, $waktuMain = 0)
     {
         $this->judul = $judul;
         $this->penulis = $penulis;
@@ -18,7 +17,6 @@ class Produk {
         $this->harga = $harga;
         $this->jmlHalaman = $jmlHalaman;
         $this->waktuMain = $waktuMain;
-        $this->tipe = $tipe;
     }
 
     public function getLabel() {
@@ -27,11 +25,21 @@ class Produk {
 
     public function getInfoProduk() {
         $str = "{$this->tipe} : | {$this->getLabel()} (Rp. {$this->harga})";
-        if($this->tipe == "Komik") {
-            $str .= " - {$this->jmlHalaman} Halaman.";
-        } else if($this->tipe == "Game") {
-            $str .= " - {$this->waktuMain} Jam.";
-        }
+        return $str;
+    }
+}
+
+class Komik extends Produk {
+    public function getInfoProduk() {
+        $str = "Komik : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga}) - {$this->jmlHalaman} Halaman.";
+        return $str;
+    }
+}
+
+class Game extends Produk {
+    public function getInfoProduk()
+    {
+        $str = "Game : {$this->judul} | {$this->getLabel()} (Rp. {$this->harga}) ~ {$this->waktuMain} Jam.";
         return $str;
     }
 }
@@ -45,9 +53,8 @@ Class CetakInfoProduk{
 }
 
 
-$produk1 = new Produk("Naruto", "Masashi Kisomoto", "Shonen Jump", 250000, 300, 0, "Komik");
-$produk2 = new Produk("Uncharted", "Neil Druckman", "Sony Computer", 500000, 0, 50, "Game");
-$produk3 = new Produk("DragonBall");
+$produk1 = new Komik("Naruto", "Masashi Kisomoto", "Shonen Jump", 250000, 300, 0, "Komik");
+$produk2 = new Game("Uncharted", "Neil Druckman", "Sony Computer", 500000, 0, 50, "Game");
 
 echo $produk1->getInfoProduk();
 echo "<br>";
